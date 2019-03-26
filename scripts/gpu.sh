@@ -9,9 +9,9 @@ TENSORBOARD_PID=$!
 echo "Started Tensorboard with PID: $TENSORBOARD_PID"
 
 # Start training script
-python ../run-gqn.py \
+python3 ../run-gqn.py \
     --data_dir $DATA_DIR \
     --log_dir "../logs" \
     --data_parallel "True" \
     --batch_size 1 \
-    --n_workers 6
+    --workers 6
