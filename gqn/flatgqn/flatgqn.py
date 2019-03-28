@@ -6,7 +6,7 @@ from .representation import TowerRepresentation
 from .generator import GeneratorNetwork
 
 
-class TGQN(nn.Module):
+class FlatGQN(nn.Module):
     """
     Generative Query Network (GQN) as described
     in "Neural scene representation and rendering"
@@ -20,7 +20,7 @@ class TGQN(nn.Module):
     :param L: Number of refinements of density
     """
     def __init__(self, x_dim, v_dim, r_dim, h_dim, z_dim, L=12):
-        super(TGQN, self).__init__()
+        super(FlatGQN, self).__init__()
         self.r_dim = r_dim
 
         self.generator = GeneratorNetwork(x_dim, v_dim, r_dim, z_dim, h_dim, L)
