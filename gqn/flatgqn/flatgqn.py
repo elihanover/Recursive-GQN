@@ -27,7 +27,7 @@ class FlatGQN(nn.Module):
         self.representation = TowerRepresentation(x_dim, v_dim, r_dim, pool=True)
         self.listeners = []
 
-    def forward(self, context_x, context_v, query_x, query_v):
+    def forward(self, context_x, context_v, listener, inputs)
         """
         Forward through the GQN.
 
@@ -55,20 +55,18 @@ class FlatGQN(nn.Module):
         r = torch.sum(phi, dim=1)
 
         # Use random (image, viewpoint) pair in batch as query
-        x_mu, kl = self.generator(query_x, query_v, r)
+        # call generator if listener == -1
+        if listener == -1:
+            x_mu, kl = self.generator(inputs[0], inputs[1], r)
+            # Return reconstruction and query viewpoint
+            # for computing error
+            return (x_mu, r, kl)
 
-        # TODO: depth first execution of listeners
-        # call each listener
-        # TODO: add other parameters besides R specific to each task
-        outputs = []
-        for model, name in self.listeners:
-            print("RUNNING MODEL: ", name)
-            res = model(torch.rand(1, 3, 64, 64), torch.rand(1, 7), torch.rand(1, 256, 1, 1)) # TODO: what to use as input???
-            outputs.append((res, name))
-
-        # Return reconstruction and query viewpoint
-        # for computing error
-        return (x_mu, r, kl, outputs)
+        # call specified listener
+        model, name = self.listeners[listener]
+        print("RUNNING MODEL: ", name)
+        return model(inputs)
+        
 
     def sample(self, context_x, context_v, query_v, sigma):
         """
