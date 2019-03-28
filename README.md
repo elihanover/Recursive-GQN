@@ -27,6 +27,7 @@ Eventually, I would like to test the extensibility of this model, specifically i
 ![](diagrams/RecursiveGQN.png)
 
 ## Other potential use cases include:
+- **temporal GQN**, guesses future states
 - **generate VR environments** from scene representations
 - stitch together **google streetview** images into a 3d model
 - multi-agent **collaborative** scene representation
